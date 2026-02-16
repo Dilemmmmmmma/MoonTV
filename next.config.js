@@ -9,9 +9,24 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
 
+  // 1. 新增：强制设置 HTTP 头，彻底移除 Referrer，绕过豆瓣防盗链
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Referrer-Policy',
+            value: 'no-referrer',
+          },
+        ],
+      },
+    ];
+  },
+
   // Uncoment to add domain whitelist
   images: {
-    unoptimized: true,
+    unoptimized: true, // 保持开启，Cloudflare Pages 必需
     remotePatterns: [
       {
         protocol: 'https',

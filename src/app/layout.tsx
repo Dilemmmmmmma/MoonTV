@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: siteName,
     description: '影视聚合',
-    referrer: 'no-referrer',
+    referrer: 'no-referrer', // 保留这个设置作为第一道防线
     manifest: '/manifest.json',
   };
 }
@@ -96,6 +96,11 @@ export default async function RootLayout({
           name='viewport'
           content='width=device-width, initial-scale=1.0, viewport-fit=cover'
         />
+        
+        {/* 👇👇👇 这里是最关键的修改：强制插入 meta 标签 👇👇👇 */}
+        <meta name="referrer" content="no-referrer" />
+        {/* 👆👆👆 修改结束 👆👆👆 */}
+
         {/* 将配置序列化后直接写入脚本，浏览器端可通过 window.RUNTIME_CONFIG 获取 */}
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script

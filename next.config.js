@@ -9,7 +9,7 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
 
-  // 1. 新增：强制设置 HTTP 头，彻底移除 Referrer，绕过豆瓣防盗链
+  // 1. 强制设置 HTTP 头，彻底移除 Referrer，绕过豆瓣防盗链
   async headers() {
     return [
       {
@@ -26,7 +26,7 @@ const nextConfig = {
 
   // Uncoment to add domain whitelist
   images: {
-    unoptimized: true, // 保持开启，Cloudflare Pages 必需
+    unoptimized: true, // 保持开启
     remotePatterns: [
       {
         protocol: 'https',
@@ -79,11 +79,14 @@ const nextConfig = {
   },
 };
 
-const withPWA = require('next-pwa')({
-  dest: 'public',
-  disable: process.env.NODE_ENV === 'development',
-  register: true,
-  skipWaiting: true,
-});
+// ❌ 【关键修改】注释掉 PWA 配置，防止 Service Worker 捣乱
+// const withPWA = require('next-pwa')({
+//   dest: 'public',
+//   disable: process.env.NODE_ENV === 'development',
+//   register: true,
+//   skipWaiting: true,
+// });
+// module.exports = withPWA(nextConfig);
 
-module.exports = withPWA(nextConfig);
+// ✅ 直接导出配置，不包 PWA
+module.exports = nextConfig;

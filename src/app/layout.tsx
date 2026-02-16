@@ -29,6 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: siteName,
     description: '影视聚合',
+    referrer: 'no-referrer',
     manifest: '/manifest.json',
   };
 }
